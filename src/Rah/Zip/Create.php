@@ -53,27 +53,29 @@ class Rah_Zip_Create extends Rah_Zip_Base
                     $count = 0;
                 }
 
-                $localname = $file;
+                $localname = $file->getFileName();
 
-                if (strpos($this->normalizePath($file).'/', $source.'/') === 0)
+                if (strpos($this->normalizePath($localname).'/', $source.'/') === 0)
                 {
-                    $localname = $sourceDirname.substr($file, $sourceLenght);
+                    $localname = $sourceDirname.substr($localname, $sourceLenght);
                 }
 
-                if (is_dir($file))
+                if ($file->isDir())
                 {
-                    if (!$zip->addEmptyDir($localname))
+                    if ($zip->addEmptyDir($localname) !== true)
                     {
-                        return false;
+                        throw new Exception('Unable add directory to the archive.');
                     }
                 }
-                else if (is_file($file))
+                else
                 {
-                    if (!$zip->addFile($file, $localname))
+                    if ($zip->addFile($file->getFileName(), $localname) !== true)
                     {
-                        return false;
+                        throw new Exception('Unable add file to the archive.');
                     }
                 }
+
+                $this->next();
             }
         }
 
