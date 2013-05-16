@@ -75,7 +75,7 @@ class Rah_Zip_Create extends Rah_Zip_Base
 
             while ($file->valid())
             {
-                if ($file->isDot() || ($this->config->symlink === false && $file->isLink()) || $file->isReadable() === false || $this->isIgnored($file->getPathname()))
+                if ($file->isDot() || ($this->config->symlink === false && $file->isLink()) || $file->isReadable() === false)
                 {
                     $file->next();
                     continue;
@@ -88,7 +88,13 @@ class Rah_Zip_Create extends Rah_Zip_Base
                     $count = 0;
                 }
 
-                $name = $this->relativePath(realpath($source), $file->getPathname());
+                $name = $this->relativePath($source, $file->getPathname());
+
+                if (in_array($name, (array) $this->config->ignore, true))
+                {
+                    $file->next();
+                    continue;
+                }
 
                 if ($file->isDir())
                 {
@@ -108,25 +114,6 @@ class Rah_Zip_Create extends Rah_Zip_Base
                 $file->next();
             }
         }
-    }
-
-    /**
-     * Whether the file is ignored.
-     *
-     * @return string $file The filename
-     */
-
-    protected function isIgnored($file)
-    {
-        foreach ((array) $this->config->ignore as $f)
-        {
-            if (strpos($file, $f) !== false)
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**
