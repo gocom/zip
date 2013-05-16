@@ -21,7 +21,7 @@ class Rah_Zip_Extract extends Rah_Zip_Base
 
         $this->open($this->temp, null);
 
-        if ($zip->extractTo($this->config->file) === false)
+        if ($this->zip->extractTo($this->config->file) === false)
         {
             throw new Exception('Unable to extract to: ' . $this->config->file);
         }
