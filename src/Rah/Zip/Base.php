@@ -137,8 +137,6 @@ abstract class Rah_Zip_Base
 
     /**
      * Closes a file.
-     *
-     * @todo Verify that something is open
      */
 
     protected function close()
