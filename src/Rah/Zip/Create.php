@@ -60,7 +60,7 @@ class Rah_Zip_Create extends Rah_Zip_Base
                 if (($count++) === $this->config->descriptor)
                 {
                     $this->close();
-                    $this->open();
+                    $this->open($this->temp, null);
                     $count = 0;
                 }
 
