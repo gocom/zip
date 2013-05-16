@@ -129,4 +129,15 @@ abstract class Rah_Zip_Base
             throw new Exception('Unable to close: ' . $this->config->file);
         }
     }
+
+    /**
+     * Returns a path to the archive.
+     *
+     * @return string
+     */
+
+    public function __toString()
+    {
+        return (string) $this->config->file;
+    }
 }
