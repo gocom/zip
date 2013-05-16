@@ -7,12 +7,24 @@
 class Rah_Zip_Create extends Rah_Zip_Base
 {
     /**
-     * Compresses a directory or a file.
+     * Initializes.
      */
 
     protected function init()
     {
-        $this->zip->open(ZIPARCHIVE::OVERWRITE);
+        $this->tmpFile();
+        $this->open(ZIPARCHIVE::OVERWRITE);
+        $this->pack();
+        $this->close();
+        $this->move();
+    }
+
+    /**
+     * Packages the given source files.
+     */
+
+    protected function pack()
+    {
         $count = 0;
 
         foreach ((array) $this->config->source as $source)
@@ -36,11 +48,11 @@ class Rah_Zip_Create extends Rah_Zip_Base
             {
                 if ($file->isDot() || $file->isLink() || $file->isReadable() === false || $this->isIgnored($file->getPathname()))
                 {
-                    $this->next();
+                    $file->next();
                     continue;
                 }
 
-                if (($count++) === $this->config->descriptor_limit)
+                if (($count++) === $this->config->descriptor)
                 {
                     $this->close();
                     $this->open();
@@ -51,24 +63,22 @@ class Rah_Zip_Create extends Rah_Zip_Base
 
                 if ($file->isDir())
                 {
-                    if ($zip->addEmptyDir($name) !== true)
+                    if ($this->zip->addEmptyDir($name) !== true)
                     {
                         throw new Exception('Unable add directory to the archive.');
                     }
                 }
                 else
                 {
-                    if ($zip->addFile($file->getPathname(), $name) !== true)
+                    if ($this->zip->addFile($file->getPathname(), $name) !== true)
                     {
                         throw new Exception('Unable add file to the archive.');
                     }
                 }
 
-                $this->next();
+                $file->next();
             }
         }
-
-        return $zip->close();
     }
 
     /**
@@ -79,7 +89,7 @@ class Rah_Zip_Create extends Rah_Zip_Base
 
     protected function isIgnored($file)
     {
-        foreach ((array) $this->config->ignored as $f)
+        foreach ((array) $this->config->ignore as $f)
         {
             if (strpos($file, $f) !== false)
             {

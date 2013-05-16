@@ -74,20 +74,38 @@ abstract class Rah_Zip_Base
      * Gets a path to a temporary file acting as a buffer.
      */
 
-    protected function tempFile()
+    protected function tmpFile()
     {
         if (($this->temp = tempnam($this->config->tmp, 'Rah_Zip')) === false)
         {
-            throw new Exception('Unable to create temporary file.');
+            throw new Exception('Unable to create a temporary file.');
         }
 
-        if (rename($this->temp, $this->temp . '.zip') === false)
+        if (rename($this->temp, $this->temp . '.zip') === false || unlink($this->temp . '.zip') === false)
         {
-            throw new Exception('Unable to create temporary file.');
+            throw new Exception('Unable to create a temporary file.');
         }
 
         $this->temp .= '.zip';
-        unset($this->temp);
+    }
+
+    /**
+     * Moves the temprary file to the final location.
+     */
+
+    protected function move()
+    {
+        if (@rename($this->temp, $this->config->file))
+        {
+            return true;
+        }
+
+        if (@copy($this->temp, $this->config->file) && unlink($this->temp))
+        {
+            return true;
+        }
+
+        throw new Exception('Unable to move the temporary file.');
     }
 
     /**

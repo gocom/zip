@@ -26,7 +26,7 @@ abstract class Rah_Zip_Config
      * @var int 
      */
 
-    public $descriptor_limit = 200;
+    public $descriptor = 200;
 
     /**
      * An array of ignored files.
