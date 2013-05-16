@@ -143,10 +143,7 @@ abstract class Rah_Zip_Base
 
     protected function close()
     {
-        if (@$this->zip->close() === false)
-        {
-            throw new Exception('Unable to close: ' . $this->config->file);
-        }
+        @$this->zip->close();
     }
 
     /**
