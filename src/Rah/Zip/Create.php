@@ -24,19 +24,13 @@ class Rah_Zip_Create extends Rah_Zip_Base
             }
             else
             {
-                $this->addFile($source);
+                if ($this->addFile($source, basename($source)) !== true)
+                {
+                    throw new Exception('Unable add file to the archive.');
+                }
+
                 continue;
             }
-
-            $sourceDirname = '';
-
-            if (is_array($this->config->source) && count($this->config->source) > 1)
-            {
-                $sourceDirname = md5($source).'/';
-            }
-
-            $source = $this->normalizePath(dirname($source));
-            $sourceLenght = strlen($source) + 1;
 
             while ($file->valid())
             {
@@ -53,23 +47,18 @@ class Rah_Zip_Create extends Rah_Zip_Base
                     $count = 0;
                 }
 
-                $localname = $file->getPathname();
-
-                if (strpos($this->normalizePath($localname).'/', $source.'/') === 0)
-                {
-                    $localname = $sourceDirname.substr($localname, $sourceLenght);
-                }
+                $name = $this->relativePath(realpath($source), $file->getPathname());
 
                 if ($file->isDir())
                 {
-                    if ($zip->addEmptyDir($localname) !== true)
+                    if ($zip->addEmptyDir($name) !== true)
                     {
                         throw new Exception('Unable add directory to the archive.');
                     }
                 }
                 else
                 {
-                    if ($zip->addFile($file->getPathname(), $localname) !== true)
+                    if ($zip->addFile($file->getPathname(), $name) !== true)
                     {
                         throw new Exception('Unable add file to the archive.');
                     }
@@ -99,5 +88,26 @@ class Rah_Zip_Create extends Rah_Zip_Base
         }
 
         return false;
+    }
+
+    /**
+     * Gets a path relative to the given directory.
+     *
+     * @param string $directory
+     * @param string $file
+     */
+
+    protected function relativePath($directory, $file)
+    {
+        $directory = dirname($directory);
+        $directory = $this->normalizePath($directory);
+        $file = $this->normalizePath($file);
+
+        if (strpos($file.'/', $directory.'/') === 0)
+        {
+            return substr($file, strlen($directory) + 1);
+        }
+
+        return $file;
     }
 }
