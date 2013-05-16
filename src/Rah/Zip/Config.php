@@ -69,4 +69,12 @@ abstract class Rah_Zip_Config
      */
 
     public $tmp = '/tmp';
+
+    /**
+     * Include symbolics links.
+     *
+     * @var bool
+     */
+
+    public $symlink = false;
 }

@@ -75,7 +75,7 @@ class Rah_Zip_Create extends Rah_Zip_Base
 
             while ($file->valid())
             {
-                if ($file->isDot() || $file->isLink() || $file->isReadable() === false || $this->isIgnored($file->getPathname()))
+                if ($file->isDot() || ($this->config->symlink === false && $file->isLink()) || $file->isReadable() === false || $this->isIgnored($file->getPathname()))
                 {
                     $file->next();
                     continue;
