@@ -40,7 +40,7 @@ class Rah_Zip_Create extends Rah_Zip_Base
 
             while ($file->valid())
             {
-                if ($file->isDot() || $file->isLink() || $file->isReadable() === false || $this->isIgnored($file->getFileName()))
+                if ($file->isDot() || $file->isLink() || $file->isReadable() === false || $this->isIgnored($file->getPathname()))
                 {
                     $this->next();
                     continue;
@@ -53,7 +53,7 @@ class Rah_Zip_Create extends Rah_Zip_Base
                     $count = 0;
                 }
 
-                $localname = $file->getFileName();
+                $localname = $file->getPathname();
 
                 if (strpos($this->normalizePath($localname).'/', $source.'/') === 0)
                 {
@@ -69,7 +69,7 @@ class Rah_Zip_Create extends Rah_Zip_Base
                 }
                 else
                 {
-                    if ($zip->addFile($file->getFileName(), $localname) !== true)
+                    if ($zip->addFile($file->getPathname(), $localname) !== true)
                     {
                         throw new Exception('Unable add file to the archive.');
                     }
