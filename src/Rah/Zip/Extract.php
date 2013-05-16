@@ -12,7 +12,7 @@ class Rah_Zip_Extract extends Rah_Zip_Base
 
     protected function init()
     {
-        $this->open();
+        $this->open($this->config->source, null);
 
         if ($zip->extractTo($this->config->file) === false || $this->close())
         {

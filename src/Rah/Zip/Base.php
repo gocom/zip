@@ -123,12 +123,13 @@ abstract class Rah_Zip_Base
     /**
      * Opens a file.
      *
-     * @param int $flags
+     * @param string $filename The filename
+     * @param int    $flags    The flags
      */
 
-    protected function open($flags = ZIPARCHIVE::OVERWRITE)
+    protected function open($filename, $flags = ZIPARCHIVE::OVERWRITE)
     {
-        if ($this->zip->open($this->temp, $flags) !== true)
+        if ($this->zip->open($filename, $flags) !== true)
         {
             throw new Exception('Unable to open: ' . $this->config->file);
         }

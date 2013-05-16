@@ -13,7 +13,7 @@ class Rah_Zip_Create extends Rah_Zip_Base
     protected function init()
     {
         $this->tmpFile();
-        $this->open(ZIPARCHIVE::OVERWRITE);
+        $this->open($this->temp, ZIPARCHIVE::OVERWRITE);
         $this->pack();
         $this->close();
         $this->move();
