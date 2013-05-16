@@ -36,7 +36,7 @@ class Rah_Zip_Create extends Rah_Zip_Base
             }
             else
             {
-                if ($this->addFile($source, basename($source)) !== true)
+                if ($this->zip->addFile($source, basename($source)) !== true)
                 {
                     throw new Exception('Unable add file to the archive.');
                 }
