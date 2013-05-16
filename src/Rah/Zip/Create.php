@@ -29,6 +29,11 @@ class Rah_Zip_Create extends Rah_Zip_Base
 
         foreach ((array) $this->config->source as $source)
         {
+            if (($source = realpath($source)) === false || !file_exists($source) || !is_readable($source) || (!is_file($source) && !is_dir($source)))
+            {
+                throw new Exception('Unable add source to the archive: ' . $source);
+            }
+
             if (is_dir($source))
             {
                 $files = new RecursiveDirectoryIterator($source);
@@ -38,7 +43,7 @@ class Rah_Zip_Create extends Rah_Zip_Base
             {
                 if ($this->zip->addFile($source, basename($source)) !== true)
                 {
-                    throw new Exception('Unable add file to the archive.');
+                    throw new Exception('Unable add file to the archive: ' . $source);
                 }
 
                 continue;
