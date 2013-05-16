@@ -169,6 +169,28 @@ abstract class Rah_Zip_Base
     }
 
     /**
+     * Gets a path relative within the given directory.
+     *
+     * @param  string $directory The base directory
+     * @param  string $file      The file
+     * @return string The path
+     */
+
+    protected function relativePath($directory, $file)
+    {
+        $directory = dirname($directory);
+        $directory = $this->normalizePath($directory);
+        $file = $this->normalizePath($file);
+
+        if (strpos($file.'/', $directory.'/') === 0)
+        {
+            return substr($file, strlen($directory) + 1);
+        }
+
+        return $file;
+    }
+
+    /**
      * Returns a path to the archive.
      *
      * @return string

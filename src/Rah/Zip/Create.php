@@ -115,25 +115,4 @@ class Rah_Zip_Create extends Rah_Zip_Base
             }
         }
     }
-
-    /**
-     * Gets a path relative to the given directory.
-     *
-     * @param string $directory
-     * @param string $file
-     */
-
-    protected function relativePath($directory, $file)
-    {
-        $directory = dirname($directory);
-        $directory = $this->normalizePath($directory);
-        $file = $this->normalizePath($file);
-
-        if (strpos($file.'/', $directory.'/') === 0)
-        {
-            return substr($file, strlen($directory) + 1);
-        }
-
-        return $file;
-    }
 }
