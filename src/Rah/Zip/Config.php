@@ -7,7 +7,7 @@
 abstract class Rah_Zip_Config
 {
     /**
-     * The filename.
+     * The ZIP archive filename.
      *
      * @var string
      */
@@ -16,6 +16,8 @@ abstract class Rah_Zip_Config
 
     /**
      * Source files or directories.
+     *
+     * @var string|array
      */
 
     public $source = array();
@@ -37,7 +39,7 @@ abstract class Rah_Zip_Config
     public $ignore = array();
 
     /**
-     * Path to temporary directory.
+     * Path to the temporary directory.
      *
      * @var string
      */
