@@ -26,6 +26,15 @@
 
 /**
  * Extracts an archive.
+ *
+ * @example
+ * $zip = new Rah_Zip_Archive();
+ * $zip
+ *    ->source('/path/to/archive.zip')
+ *    ->file('/path/to/target/directory')
+ *    ->tmp('/tmp');
+ *
+ * new Rah_Zip_Extract($zip);
  */
 
 class Rah_Zip_Extract extends Rah_Zip_Base

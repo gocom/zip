@@ -26,6 +26,15 @@
 
 /**
  * Creates an archive.
+ *
+ * @example
+ * $zip = new Rah_Zip_Archive();
+ * $zip
+ *    ->file('/path/to/archive.zip')
+ *    ->source('/path/to/source/directory')
+ *    ->tmp('/tmp');
+ *
+ * new Rah_Zip_Create($zip);
  */
 
 class Rah_Zip_Create extends Rah_Zip_Base

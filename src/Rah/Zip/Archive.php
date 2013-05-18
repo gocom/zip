@@ -26,6 +26,13 @@
 
 /**
  * Configures an archive instance.
+ *
+ * @example
+ * $zip = new Rah_Zip_Archive();
+ * $zip
+ *     ->file('/path/to/archive.zip')
+ *     ->source('/path/to/source')
+ *     ->tmp('/tmp');
  */
 
 class Rah_Zip_Archive extends Rah_Zip_Config

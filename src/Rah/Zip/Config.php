@@ -26,6 +26,14 @@
 
 /**
  * The configuration options.
+ *
+ * @example
+ * class MyAppConfig extends Rah_Zip_Config
+ * {
+ *     public $file = '/path/to/archive.zip';
+ *     public $source = '/path/to/source';
+ *     public $tmp = '/tmp';
+ * }
  */
 
 abstract class Rah_Zip_Config
