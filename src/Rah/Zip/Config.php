@@ -55,6 +55,14 @@ abstract class Rah_Zip_Config
     public $source = array();
 
     /**
+     * Path to extract to.
+     *
+     * @var string
+     */
+
+    public $target;
+
+    /**
      * The file descriptor limit and a reset point.
      *
      * @var int 

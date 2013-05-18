@@ -30,8 +30,8 @@
  * @example
  * $zip = new Rah_Zip_Archive();
  * $zip
- *    ->source('/path/to/archive.zip')
- *    ->file('/path/to/target/directory')
+ *    ->file('/path/to/archive.zip')
+ *    ->target('/path/to/target/directory')
  *    ->tmp('/tmp');
  *
  * new Rah_Zip_Extract($zip);
@@ -47,16 +47,16 @@ class Rah_Zip_Extract extends Rah_Zip_Base
     {
         $this->tmpFile();
 
-        if (copy((string) $this->config->source, $this->temp) === false)
+        if (copy((string) $this->config->file, $this->temp) === false)
         {
             throw new Exception('Unable to create a temporary file.');
         }
 
         $this->open($this->temp, null);
 
-        if ($this->zip->extractTo($this->config->file) === false)
+        if ($this->zip->extractTo($this->config->target) === false)
         {
-            throw new Exception('Unable to extract to: ' . $this->config->file);
+            throw new Exception('Unable to extract to: ' . $this->config->target);
         }
 
         $this->close();
