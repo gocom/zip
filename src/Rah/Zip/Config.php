@@ -73,6 +73,10 @@ abstract class Rah_Zip_Config
     /**
      * Include symbolics links.
      *
+     * If TRUE, symlinks are resolved and
+     * target files stored in the archive.
+     * Otherwise ignored.
+     *
      * @var bool
      */
 
