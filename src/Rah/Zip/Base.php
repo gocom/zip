@@ -83,6 +83,15 @@ abstract class Rah_Zip_Base
     }
 
     /**
+     * Initialize.
+     */
+
+    protected function init()
+    {
+        throw new Exception(__CLASS__.'::init() method is unimplemented.');
+    }
+
+    /**
      * Normalizes a filename.
      *
      * @param  string $path
