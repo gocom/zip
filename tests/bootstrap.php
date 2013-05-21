@@ -13,5 +13,5 @@ error_reporting(E_ALL);
 include dirname(dirname(__FILE__)) . '/vendor/autoload.php';
 
 $loader = new \Composer\Autoload\ClassLoader();
-$loader->add('Rah_Danpu_Test_', dirname(__FILE__));
+$loader->add('Rah_Zip_Test_', dirname(__FILE__));
 $loader->register();
