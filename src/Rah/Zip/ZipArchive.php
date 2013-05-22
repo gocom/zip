@@ -148,7 +148,7 @@ class Rah_Zip_ZipArchive
     {
         if ($this->zip->open($filename, $flags) !== true)
         {
-            throw new Exception('Unable to open: ' . $filename);
+            throw new Exception('Unable to open: '.$filename);
         }
         else
         {
@@ -165,7 +165,11 @@ class Rah_Zip_ZipArchive
     {
         if ($this->isOpen === true)
         {
-            $this->zip->close();
+            if ($this->zip->close() !== true)
+            {
+                throw new Exception('Unable to close: '.$this->filename);
+            }
+
             $this->isOpen = false;
         }
     }
@@ -183,7 +187,7 @@ class Rah_Zip_ZipArchive
 
         if ($this->zip->addFile($file, $localname) !== true)
         {
-            throw new Exception('Unable add file to the archive.');
+            throw new Exception('Unable to add a file to the archive: '.$localname);
         }
     }
 
@@ -200,7 +204,7 @@ class Rah_Zip_ZipArchive
 
         if ($this->zip->addEmptyDir($localname) !== true)
         {
-            throw new Exception('Unable add directory to the archive.');
+            throw new Exception('Unable to add a directory to the archive: '.$localname);
         }
     }
 
@@ -230,7 +234,7 @@ class Rah_Zip_ZipArchive
     {
         if ($this->zip->extractTo($filename) !== true)
         {
-            throw new Exception('Unable to extract to: ' . $filename);
+            throw new Exception('Unable to extract to: '.$filename);
         }
     }
 
