@@ -238,7 +238,7 @@ class Rah_Zip_ZipArchive
      * Reset the current stack.
      *
      * This prevents ZipArchive from dying when
-     * adding hundred of files.
+     * adding hundreds of files.
      */
 
     protected function resetStack()
