@@ -105,7 +105,7 @@ class Rah_Zip_Create extends Rah_Zip_Base
                 }
                 else
                 {
-                    $this->zip->addFile($name, $name);
+                    $this->zip->addFile($name);
                 }
 
                 $file->next();

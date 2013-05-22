@@ -176,13 +176,12 @@ class Rah_Zip_ZipArchive
      * Adds a file to the archive.
      *
      * @param string $file      The filename
-     * @param string $localname The name inside the archive 
      */
 
-    public function addFile($file, $localname)
+    public function addFile($file)
     {
         $this->resetStack();
-        $localname = $this->relativePath($localname);
+        $localname = $this->relativePath($file);
 
         if ($this->zip->addFile($file, $localname) !== true)
         {
