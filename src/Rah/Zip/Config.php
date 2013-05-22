@@ -63,14 +63,6 @@ abstract class Rah_Zip_Config
     public $target;
 
     /**
-     * The file descriptor limit and a reset point.
-     *
-     * @var int 
-     */
-
-    public $descriptor = 200;
-
-    /**
      * An array of ignored files.
      *
      * @var array

@@ -62,13 +62,8 @@ abstract class Rah_Zip_Base
 
     public function __construct($config)
     {
-        if (!class_exists('ZipArchive'))
-        {
-            throw new Exception('ZipArchive is not installed.');
-        }
-
+        $this->zip = new Rah_Zip_ZipArchive();
         $this->config = $config;
-        $this->zip = new ZipArchive();
         $this->init();
     }
 
@@ -89,18 +84,6 @@ abstract class Rah_Zip_Base
     protected function init()
     {
         throw new Exception(__CLASS__.'::init() method is unimplemented.');
-    }
-
-    /**
-     * Normalizes a filename.
-     *
-     * @param  string $path
-     * @return string
-     */
-
-    protected function normalizePath($path)
-    {
-        return rtrim(str_replace('\\', '/', $path), '/');
     }
 
     /**
@@ -151,52 +134,6 @@ abstract class Rah_Zip_Base
         {
             unlink($this->temp);
         }
-    }
-
-    /**
-     * Opens a file.
-     *
-     * @param string $filename The filename
-     * @param int    $flags    The flags
-     */
-
-    protected function open($filename, $flags = ZIPARCHIVE::OVERWRITE)
-    {
-        if ($this->zip->open($filename, $flags) !== true)
-        {
-            throw new Exception('Unable to open: ' . $this->config->file);
-        }
-    }
-
-    /**
-     * Closes a file.
-     */
-
-    protected function close()
-    {
-        @$this->zip->close();
-    }
-
-    /**
-     * Gets a path relative within the given directory.
-     *
-     * @param  string $directory The base directory
-     * @param  string $file      The file
-     * @return string The path
-     */
-
-    protected function relativePath($directory, $file)
-    {
-        $directory = dirname($directory);
-        $directory = $this->normalizePath($directory);
-        $file = $this->normalizePath($file);
-
-        if (strpos($file.'/', $directory.'/') === 0)
-        {
-            return substr($file, strlen($directory) + 1);
-        }
-
-        return $file;
     }
 
     /**

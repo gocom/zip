@@ -25,7 +25,10 @@
  */
 
 /**
- * Creates an archive.
+ * Creates an archive from the given file or directory.
+ *
+ * If the specified file is a directory, all of its files
+ * are added recursively to the archive.
  *
  * @example
  * $zip = new Rah_Zip_Archive();
@@ -46,9 +49,9 @@ class Rah_Zip_Create extends Rah_Zip_Base
     protected function init()
     {
         $this->tmpFile();
-        $this->open($this->temp, ZIPARCHIVE::OVERWRITE);
+        $this->zip->open($this->temp, ZIPARCHIVE::OVERWRITE);
         $this->pack();
-        $this->close();
+        $this->zip->close();
         $this->move();
     }
 
@@ -67,6 +70,8 @@ class Rah_Zip_Create extends Rah_Zip_Base
                 throw new Exception('Unable add source to the archive: ' . $source);
             }
 
+            $this->zip->baseDirectory($source);
+
             if (is_dir($source))
             {
                 $files = new RecursiveDirectoryIterator($source);
@@ -74,11 +79,7 @@ class Rah_Zip_Create extends Rah_Zip_Base
             }
             else
             {
-                if ($this->zip->addFile($source, basename($source)) !== true)
-                {
-                    throw new Exception('Unable add file to the archive: ' . $source);
-                }
-
+                $this->zip->addFile($source, basename($source));
                 continue;
             }
 
@@ -90,14 +91,7 @@ class Rah_Zip_Create extends Rah_Zip_Base
                     continue;
                 }
 
-                if (($count++) === $this->config->descriptor)
-                {
-                    $this->close();
-                    $this->open($this->temp, null);
-                    $count = 0;
-                }
-
-                $name = $this->relativePath($source, $file->getPathname());
+                $name = $file->getPathname();
 
                 if (in_array($name, (array) $this->config->ignore, true))
                 {
@@ -107,17 +101,11 @@ class Rah_Zip_Create extends Rah_Zip_Base
 
                 if ($file->isDir())
                 {
-                    if ($this->zip->addEmptyDir($name) !== true)
-                    {
-                        throw new Exception('Unable add directory to the archive.');
-                    }
+                    $this->zip->addEmptyDir($name);
                 }
                 else
                 {
-                    if ($this->zip->addFile($file->getPathname(), $name) !== true)
-                    {
-                        throw new Exception('Unable add file to the archive.');
-                    }
+                    $this->zip->addFile($name, $name);
                 }
 
                 $file->next();

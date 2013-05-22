@@ -52,14 +52,9 @@ class Rah_Zip_Extract extends Rah_Zip_Base
             throw new Exception('Unable to create a temporary file.');
         }
 
-        $this->open($this->temp, null);
-
-        if ($this->zip->extractTo($this->config->target) === false)
-        {
-            throw new Exception('Unable to extract to: ' . $this->config->target);
-        }
-
-        $this->close();
+        $this->zip->open($this->temp, null);
+        $this->zip->extractTo($this->config->target);
+        $this->zip->close();
         $this->clean();
     }
 }
