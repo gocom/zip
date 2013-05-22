@@ -44,7 +44,7 @@ class Rah_Zip_ZipArchive
      * @var int 
      */
 
-    protected $descriptor = 200;
+    protected $descriptor = 100;
 
     /**
      * Number of files processed.
