@@ -127,13 +127,11 @@ class Rah_Zip_ZipArchive
 
     protected function relativePath($file)
     {
-        $directory = dirname($this->basepath);
-        $directory = $this->normalizePath($directory);
         $file = $this->normalizePath($file);
 
-        if (strpos($file.'/', $directory.'/') === 0)
+        if (strpos($file.'/', $this->basepath.'/') === 0)
         {
-            return substr($file, strlen($directory) + 1);
+            return substr($file, strlen($this->basepath) + 1);
         }
 
         return $file;
@@ -214,7 +212,12 @@ class Rah_Zip_ZipArchive
 
     public function baseDirectory($directory)
     {
-        $this->basepath = $directory;
+        if (is_file($directory))
+        {
+            $directory = dirname($directory);
+        }
+
+        $this->basepath = $this->normalizePath($directory);
     }
 
     /**
