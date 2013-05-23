@@ -61,7 +61,7 @@ abstract class Rah_Zip_Base
      * @param Rah_Zip_Archive_Template $zip
      */
 
-    public function __construct($config, Rah_Zip_Archive_Template $zip = null)
+    public function __construct(Rah_Zip_Config $config, Rah_Zip_Archive_Template $zip = null)
     {
         if ($zip === null)
         {
