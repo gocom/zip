@@ -28,7 +28,7 @@
  * Base class.
  */
 
-abstract class Rah_Zip_Base
+abstract class Rah_Zip_Base implements Rah_Zip_Template
 {
     /**
      * The config.
@@ -55,10 +55,7 @@ abstract class Rah_Zip_Base
     protected $temp;
 
     /**
-     * Constructor.
-     *
-     * @param Rah_Zip_Config           $config
-     * @param Rah_Zip_Archive_Template $zip
+     * {@inheritdoc}
      */
 
     public function __construct(Rah_Zip_Config $config, Rah_Zip_Archive_Template $zip = null)
@@ -77,7 +74,7 @@ abstract class Rah_Zip_Base
     }
 
     /**
-     * Destructor.
+     * {@inheritdoc}
      */
 
     public function __destruct()
@@ -146,9 +143,7 @@ abstract class Rah_Zip_Base
     }
 
     /**
-     * Returns a path to the archive.
-     *
-     * @return string
+     * {@inheritdoc}
      */
 
     public function __toString()
