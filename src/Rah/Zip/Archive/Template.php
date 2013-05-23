@@ -51,6 +51,7 @@ interface Rah_Zip_Archive_Template
      *
      * @param  string $filename The filename
      * @param  int    $flags    The flags
+     * @return Rah_Zip_Archive_Template
      * @throws Rah_Zip_Archive_Exception
      */
 
@@ -59,6 +60,7 @@ interface Rah_Zip_Archive_Template
     /**
      * Closes the file.
      *
+     * @return Rah_Zip_Archive_Template
      * @throws Rah_Zip_Archive_Exception
      */
 
@@ -68,6 +70,7 @@ interface Rah_Zip_Archive_Template
      * Adds a file to the archive.
      *
      * @param  string $file The filename
+     * @return Rah_Zip_Archive_Template
      * @throws Rah_Zip_Archive_Exception
      */
 
@@ -77,6 +80,7 @@ interface Rah_Zip_Archive_Template
      * Adds an empty directory to the archive.
      *
      * @param  string $localname The filename inside the archive
+     * @return Rah_Zip_Archive_Template
      * @throws Rah_Zip_Archive_Exception
      */
 
@@ -87,6 +91,7 @@ interface Rah_Zip_Archive_Template
      *
      * @param  string $localname  The filename
      * @param  string $contents   The file contents
+     * @return Rah_Zip_Archive_Template
      * @throws Rah_Zip_Archive_Exception
      */
 
@@ -106,7 +111,8 @@ interface Rah_Zip_Archive_Template
      * query the filesystem. The path is treated as a string,
      * and merely compared to the given file paths.
      *
-     * @param string $directory Path to the directory
+     * @param  string $directory Path to the directory
+     * @return Rah_Zip_Archive_Template
      */
 
     public function baseDirectory($directory);
@@ -116,6 +122,7 @@ interface Rah_Zip_Archive_Template
      *
      * @param  string       $destination   The location the archive is extracted to
      * @param  string|array $entries       The entries to extract by name
+     * @return Rah_Zip_Archive_Template
      * @throws Rah_Zip_Archive_Exception
      */
 

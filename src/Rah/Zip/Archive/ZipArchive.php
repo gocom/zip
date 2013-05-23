@@ -118,6 +118,8 @@ class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
             $this->filename = $filename;
             $this->isOpen = true;
         }
+
+        return $this;
     }
 
     /**
@@ -135,6 +137,8 @@ class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
 
             $this->isOpen = false;
         }
+
+        return $this;
     }
 
     /**
@@ -150,6 +154,8 @@ class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
         {
             throw new Rah_Zip_Archive_Exception('Unable to add a file to the archive: '.$localname);
         }
+
+        return $this;
     }
 
     /**
@@ -165,6 +171,8 @@ class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
         {
             throw new Rah_Zip_Archive_Exception('Unable to add a directory to the archive: '.$localname);
         }
+
+        return $this;
     }
 
     /**
@@ -180,6 +188,8 @@ class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
         {
             throw new Rah_Zip_Archive_Exception('Unable to add a file from a string to the archive: '.$localname);
         }
+
+        return $this;
     }
 
     /**
@@ -194,6 +204,7 @@ class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
         }
 
         $this->basepath = $this->normalizePath($directory);
+        return $this;
     }
 
     /**
@@ -206,6 +217,8 @@ class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
         {
             throw new Rah_Zip_Archive_Exception('Unable to extract to: '.$filename);
         }
+
+        return $this;
     }
 
     /**
