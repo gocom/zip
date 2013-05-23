@@ -73,10 +73,10 @@ abstract class Rah_Zip_Config
     /**
      * Path to the temporary directory.
      *
-     * @var string
+     * @var string|null
      */
 
-    public $tmp = '/tmp';
+    public $tmp = null;
 
     /**
      * Include symbolics links.

@@ -45,16 +45,15 @@ class Rah_Zip_Extract extends Rah_Zip_Base
 
     protected function init()
     {
-        $this->tmpFile();
+        $tmp = new Rah_Eien_File();
+        $tmp
+            ->tmp($this->config->tmp)
+            ->file($this->config->file);
 
-        if (copy((string) $this->config->file, $this->temp) === false)
-        {
-            throw new Exception('Unable to create a temporary file.');
-        }
-
-        $this->zip->open($this->temp, null);
+        $file = new Rah_Eien_Temporary_Make($tmp);
+        $this->zip->open($file->getPath(), null);
         $this->zip->extractTo($this->config->target);
         $this->zip->close();
-        $this->clean();
+        $file->trash();
     }
 }

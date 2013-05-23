@@ -47,14 +47,6 @@ abstract class Rah_Zip_Base implements Rah_Zip_Template
     protected $zip;
 
     /**
-     * Path to a temporary file.
-     *
-     * @var string
-     */
-
-    protected $temp;
-
-    /**
      * {@inheritdoc}
      */
 
@@ -80,7 +72,6 @@ abstract class Rah_Zip_Base implements Rah_Zip_Template
     public function __destruct()
     {
         $this->close();
-        $this->clean();
     }
 
     /**
@@ -90,56 +81,6 @@ abstract class Rah_Zip_Base implements Rah_Zip_Template
     protected function init()
     {
         throw new Exception(__CLASS__.'::init() method is unimplemented.');
-    }
-
-    /**
-     * Gets a path to a temporary file acting as a buffer.
-     */
-
-    protected function tmpFile()
-    {
-        if (($this->temp = tempnam($this->config->tmp, 'Rah_Zip')) === false)
-        {
-            throw new Exception('Unable to create a temporary file.');
-        }
-
-        if (rename($this->temp, $this->temp . '.zip') === false || unlink($this->temp . '.zip') === false)
-        {
-            throw new Exception('Unable to create a temporary file.');
-        }
-
-        $this->temp .= '.zip';
-    }
-
-    /**
-     * Moves the temporary file to the final location.
-     */
-
-    protected function move()
-    {
-        if (@rename($this->temp, $this->config->file))
-        {
-            return true;
-        }
-
-        if (@copy($this->temp, $this->config->file) && unlink($this->temp))
-        {
-            return true;
-        }
-
-        throw new Exception('Unable to move the temporary file.');
-    }
-
-    /**
-     * Cleans temporary trash files.
-     */
-
-    protected function clean()
-    {
-        if (file_exists($this->temp))
-        {
-            unlink($this->temp);
-        }
     }
 
     /**

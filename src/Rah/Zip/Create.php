@@ -48,11 +48,16 @@ class Rah_Zip_Create extends Rah_Zip_Base
 
     protected function init()
     {
-        $this->tmpFile();
+        $tmp = new Rah_Eien_File();
+        $tmp
+            ->tmp($this->config->tmp)
+            ->final($this->config->file);
+
+        $file = new Rah_Eien_Temporary_File($tmp);
         $this->zip->open($this->temp, ZIPARCHIVE::OVERWRITE);
         $this->pack();
         $this->zip->close();
-        $this->move();
+        $file->move();
     }
 
     /**
