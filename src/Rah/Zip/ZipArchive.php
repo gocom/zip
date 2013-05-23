@@ -177,7 +177,7 @@ class Rah_Zip_ZipArchive
     /**
      * Adds a file to the archive.
      *
-     * @param string $file      The filename
+     * @param string $file The filename
      */
 
     public function addFile($file)
@@ -205,6 +205,24 @@ class Rah_Zip_ZipArchive
         if ($this->zip->addEmptyDir($localname) !== true)
         {
             throw new Exception('Unable to add a directory to the archive: '.$localname);
+        }
+    }
+
+    /**
+     * Adds a file to the archive from a string presenting the contents.
+     *
+     * @param string $localname  The filename
+     * @param string $contents   The file contents
+     */
+
+    public function addFromString($localname, $contents)
+    {
+        $this->resetStack();
+        $localname = $this->normalizePath($localname);
+
+        if ($this->zip->addFromString($localname, $contents) !== true)
+        {
+            throw new Exception('Unable to add a file from a string to the archive: '.$localname);
         }
     }
 
