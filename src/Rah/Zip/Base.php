@@ -112,7 +112,7 @@ abstract class Rah_Zip_Base implements Rah_Zip_Template
     }
 
     /**
-     * Moves the temprary file to the final location.
+     * Moves the temporary file to the final location.
      */
 
     protected function move()
