@@ -28,7 +28,7 @@
  * ZipArchive implementation.
  */
 
-class Rah_Zip_Archive_ZipArchive
+class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
 {
     /**
      * The instance.
@@ -79,7 +79,7 @@ class Rah_Zip_Archive_ZipArchive
     protected $basepath = '';
 
     /**
-     * Constructor.
+     * {@inheritdoc}
      */
 
     public function __construct()
@@ -95,12 +95,134 @@ class Rah_Zip_Archive_ZipArchive
     }
 
     /**
-     * Destructor.
+     * {@inheritdoc}
      */
 
     public function __destruct()
     {
         $this->close();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+
+    public function open($filename, $flags = ZIPARCHIVE::OVERWRITE)
+    {
+        if ($this->zip->open($filename, $flags) !== true)
+        {
+            throw new Rah_Zip_Archive_Exception('Unable to open: '.$filename);
+        }
+        else
+        {
+            $this->filename = $filename;
+            $this->isOpen = true;
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+
+    public function close()
+    {
+        if ($this->isOpen === true)
+        {
+            if ($this->zip->close() !== true)
+            {
+                throw new Rah_Zip_Archive_Exception('Unable to close: '.$this->filename);
+            }
+
+            $this->isOpen = false;
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+
+    public function addFile($filename)
+    {
+        $this->resetStack();
+        $localname = $this->relativePath($filename);
+
+        if ($this->zip->addFile($filename, $localname) !== true)
+        {
+            throw new Rah_Zip_Archive_Exception('Unable to add a file to the archive: '.$localname);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+
+    public function addEmptyDir($localname)
+    {
+        $this->resetStack();
+        $localname = $this->relativePath($localname);
+
+        if ($this->zip->addEmptyDir($localname) !== true)
+        {
+            throw new Rah_Zip_Archive_Exception('Unable to add a directory to the archive: '.$localname);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+
+    public function addFromString($localname, $contents)
+    {
+        $this->resetStack();
+        $localname = $this->normalizePath($localname);
+
+        if ($this->zip->addFromString($localname, $contents) !== true)
+        {
+            throw new Rah_Zip_Archive_Exception('Unable to add a file from a string to the archive: '.$localname);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+
+    public function baseDirectory($directory)
+    {
+        if (is_file($directory))
+        {
+            $directory = dirname($directory);
+        }
+
+        $this->basepath = $this->normalizePath($directory);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+
+    public function extractTo($destination, $entries = null)
+    {
+        if ($this->zip->extractTo($filename) !== true)
+        {
+            throw new Rah_Zip_Archive_Exception('Unable to extract to: '.$filename);
+        }
+    }
+
+    /**
+     * Reset the current stack.
+     *
+     * This prevents ZipArchive from dying when
+     * adding hundreds of files.
+     */
+
+    protected function resetStack()
+    {
+        if (($this->stackSize++) === $this->descriptor)
+        {
+            $this->close();
+            $this->open($this->filename, null);
+            $this->stackSize = 0;
+        }
     }
 
     /**
@@ -135,141 +257,5 @@ class Rah_Zip_Archive_ZipArchive
         }
 
         return $file;
-    }
-
-    /**
-     * Opens a file.
-     *
-     * @param string $filename The filename
-     * @param int    $flags    The flags
-     */
-
-    public function open($filename, $flags = ZIPARCHIVE::OVERWRITE)
-    {
-        if ($this->zip->open($filename, $flags) !== true)
-        {
-            throw new Rah_Zip_Archive_Exception('Unable to open: '.$filename);
-        }
-        else
-        {
-            $this->filename = $filename;
-            $this->isOpen = true;
-        }
-    }
-
-    /**
-     * Closes the file.
-     */
-
-    public function close()
-    {
-        if ($this->isOpen === true)
-        {
-            if ($this->zip->close() !== true)
-            {
-                throw new Rah_Zip_Archive_Exception('Unable to close: '.$this->filename);
-            }
-
-            $this->isOpen = false;
-        }
-    }
-
-    /**
-     * Adds a file to the archive.
-     *
-     * @param string $file The filename
-     */
-
-    public function addFile($file)
-    {
-        $this->resetStack();
-        $localname = $this->relativePath($file);
-
-        if ($this->zip->addFile($file, $localname) !== true)
-        {
-            throw new Rah_Zip_Archive_Exception('Unable to add a file to the archive: '.$localname);
-        }
-    }
-
-    /**
-     * Adds an empty directory to the archive.
-     *
-     * @param string $localname The localname
-     */
-
-    public function addEmptyDir($localname)
-    {
-        $this->resetStack();
-        $localname = $this->relativePath($localname);
-
-        if ($this->zip->addEmptyDir($localname) !== true)
-        {
-            throw new Rah_Zip_Archive_Exception('Unable to add a directory to the archive: '.$localname);
-        }
-    }
-
-    /**
-     * Adds a file to the archive from a string presenting the contents.
-     *
-     * @param string $localname  The filename
-     * @param string $contents   The file contents
-     */
-
-    public function addFromString($localname, $contents)
-    {
-        $this->resetStack();
-        $localname = $this->normalizePath($localname);
-
-        if ($this->zip->addFromString($localname, $contents) !== true)
-        {
-            throw new Rah_Zip_Archive_Exception('Unable to add a file from a string to the archive: '.$localname);
-        }
-    }
-
-    /**
-     * Sets the base path.
-     *
-     * @param string Path to the directory
-     */
-
-    public function baseDirectory($directory)
-    {
-        if (is_file($directory))
-        {
-            $directory = dirname($directory);
-        }
-
-        $this->basepath = $this->normalizePath($directory);
-    }
-
-    /**
-     * Extracts an archive.
-     *
-     * @param string $filename
-     */
-
-    public function extractTo($filename)
-    {
-        if ($this->zip->extractTo($filename) !== true)
-        {
-            throw new Rah_Zip_Archive_Exception('Unable to extract to: '.$filename);
-        }
-    }
-
-    /**
-     * Reset the current stack.
-     *
-     * This prevents ZipArchive from dying when
-     * adding hundreds of files.
-     */
-
-    protected function resetStack()
-    {
-        if (($this->stackSize++) === $this->descriptor)
-        {
-            $this->close();
-            $this->open($this->filename, null);
-            $this->stackSize = 0;
-        }
     }
 }
