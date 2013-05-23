@@ -57,12 +57,21 @@ abstract class Rah_Zip_Base
     /**
      * Constructor.
      *
-     * @param Rah_Zip_Config
+     * @param Rah_Zip_Config           $config
+     * @param Rah_Zip_Archive_Template $zip
      */
 
-    public function __construct($config)
+    public function __construct($config, Rah_Zip_Archive_Template $zip = null)
     {
-        $this->zip = new Rah_Zip_Archive_ZipArchive();
+        if ($zip === null)
+        {
+            $this->zip = new Rah_Zip_Archive_ZipArchive();
+        }
+        else
+        {
+            $this->zip = $zip;
+        }
+
         $this->config = $config;
         $this->init();
     }
