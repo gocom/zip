@@ -62,7 +62,7 @@ abstract class Rah_Zip_Base
 
     public function __construct($config)
     {
-        $this->zip = new Rah_Zip_ZipArchive();
+        $this->zip = new Rah_Zip_Archive_ZipArchive();
         $this->config = $config;
         $this->init();
     }

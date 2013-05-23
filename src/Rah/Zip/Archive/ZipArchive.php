@@ -28,7 +28,7 @@
  * ZipArchive implementation.
  */
 
-class Rah_Zip_ZipArchive
+class Rah_Zip_Archive_ZipArchive
 {
     /**
      * The instance.
@@ -90,7 +90,7 @@ class Rah_Zip_ZipArchive
         }
         else
         {
-            throw new Exception('ZipArchive is not installed.');
+            throw new Rah_Zip_Archive_Exception('ZipArchive is not installed.');
         }
     }
 
@@ -148,7 +148,7 @@ class Rah_Zip_ZipArchive
     {
         if ($this->zip->open($filename, $flags) !== true)
         {
-            throw new Exception('Unable to open: '.$filename);
+            throw new Rah_Zip_Archive_Exception('Unable to open: '.$filename);
         }
         else
         {
@@ -167,7 +167,7 @@ class Rah_Zip_ZipArchive
         {
             if ($this->zip->close() !== true)
             {
-                throw new Exception('Unable to close: '.$this->filename);
+                throw new Rah_Zip_Archive_Exception('Unable to close: '.$this->filename);
             }
 
             $this->isOpen = false;
@@ -187,7 +187,7 @@ class Rah_Zip_ZipArchive
 
         if ($this->zip->addFile($file, $localname) !== true)
         {
-            throw new Exception('Unable to add a file to the archive: '.$localname);
+            throw new Rah_Zip_Archive_Exception('Unable to add a file to the archive: '.$localname);
         }
     }
 
@@ -204,7 +204,7 @@ class Rah_Zip_ZipArchive
 
         if ($this->zip->addEmptyDir($localname) !== true)
         {
-            throw new Exception('Unable to add a directory to the archive: '.$localname);
+            throw new Rah_Zip_Archive_Exception('Unable to add a directory to the archive: '.$localname);
         }
     }
 
@@ -222,7 +222,7 @@ class Rah_Zip_ZipArchive
 
         if ($this->zip->addFromString($localname, $contents) !== true)
         {
-            throw new Exception('Unable to add a file from a string to the archive: '.$localname);
+            throw new Rah_Zip_Archive_Exception('Unable to add a file from a string to the archive: '.$localname);
         }
     }
 
@@ -252,7 +252,7 @@ class Rah_Zip_ZipArchive
     {
         if ($this->zip->extractTo($filename) !== true)
         {
-            throw new Exception('Unable to extract to: '.$filename);
+            throw new Rah_Zip_Archive_Exception('Unable to extract to: '.$filename);
         }
     }
 
