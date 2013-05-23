@@ -41,7 +41,7 @@ abstract class Rah_Zip_Base implements Rah_Zip_Template
     /**
      * An instance of ZipArchive.
      *
-     * @var ZipArchive
+     * @var Rah_Zip_Archive_Template
      */
 
     protected $zip;
