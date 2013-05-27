@@ -22,7 +22,7 @@
     },
     "require": {
         "php": ">=5.2.0",
-        "rah/eien": "<2.0.0"
+        "rah/eien": "*@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*"
