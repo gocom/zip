@@ -51,7 +51,7 @@ class Rah_Zip_Extract extends Rah_Zip_Base
             ->file($this->config->file);
 
         $file = new Rah_Eien_Temporary_Make($tmp);
-        $this->zip->open($file->getPath(), null);
+        $this->zip->open($file->getFilename(), null);
         $this->zip->extractTo($this->config->target);
         $this->zip->close();
         $file->trash();

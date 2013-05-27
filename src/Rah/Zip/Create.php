@@ -54,7 +54,7 @@ class Rah_Zip_Create extends Rah_Zip_Base
             ->final($this->config->file);
 
         $file = new Rah_Eien_Temporary_File($tmp);
-        $this->zip->open($this->temp, ZIPARCHIVE::OVERWRITE);
+        $this->zip->open($file->getFilename(), ZIPARCHIVE::OVERWRITE);
         $this->pack();
         $this->zip->close();
         $file->move();
