@@ -84,12 +84,9 @@ class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
 
     public function __construct()
     {
-        if (class_exists('ZipArchive'))
-        {
+        if (class_exists('ZipArchive')) {
             $this->zip = new ZipArchive();
-        }
-        else
-        {
+        } else {
             throw new Rah_Zip_Archive_Exception('ZipArchive is not installed.');
         }
     }
@@ -109,12 +106,9 @@ class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
 
     public function open($filename, $flags = ZIPARCHIVE::OVERWRITE)
     {
-        if ($this->zip->open($filename, $flags) !== true)
-        {
+        if ($this->zip->open($filename, $flags) !== true) {
             throw new Rah_Zip_Archive_Exception('Unable to open: '.$filename);
-        }
-        else
-        {
+        } else {
             $this->filename = $filename;
             $this->isOpen = true;
         }
@@ -128,10 +122,8 @@ class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
 
     public function close()
     {
-        if ($this->isOpen === true)
-        {
-            if ($this->zip->close() !== true)
-            {
+        if ($this->isOpen === true) {
+            if ($this->zip->close() !== true) {
                 throw new Rah_Zip_Archive_Exception('Unable to close: '.$this->filename);
             }
 
@@ -150,8 +142,7 @@ class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
         $this->resetStack();
         $localname = $this->relativePath($filename);
 
-        if ($this->zip->addFile($filename, $localname) !== true)
-        {
+        if ($this->zip->addFile($filename, $localname) !== true) {
             throw new Rah_Zip_Archive_Exception('Unable to add a file to the archive: '.$localname);
         }
 
@@ -167,8 +158,7 @@ class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
         $this->resetStack();
         $localname = $this->relativePath($localname);
 
-        if ($this->zip->addEmptyDir($localname) !== true)
-        {
+        if ($this->zip->addEmptyDir($localname) !== true) {
             throw new Rah_Zip_Archive_Exception('Unable to add a directory to the archive: '.$localname);
         }
 
@@ -184,8 +174,7 @@ class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
         $this->resetStack();
         $localname = $this->normalizePath($localname);
 
-        if ($this->zip->addFromString($localname, $contents) !== true)
-        {
+        if ($this->zip->addFromString($localname, $contents) !== true) {
             throw new Rah_Zip_Archive_Exception('Unable to add a file from a string to the archive: '.$localname);
         }
 
@@ -198,8 +187,7 @@ class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
 
     public function baseDirectory($directory)
     {
-        if (is_file($directory))
-        {
+        if (is_file($directory)) {
             $directory = dirname($directory);
         }
 
@@ -213,8 +201,7 @@ class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
 
     public function extractTo($destination, $entries = null)
     {
-        if ($this->zip->extractTo($filename) !== true)
-        {
+        if ($this->zip->extractTo($filename) !== true) {
             throw new Rah_Zip_Archive_Exception('Unable to extract to: '.$filename);
         }
 
@@ -230,8 +217,7 @@ class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
 
     protected function resetStack()
     {
-        if (($this->stackSize++) === $this->descriptor)
-        {
+        if (($this->stackSize++) === $this->descriptor) {
             $this->close();
             $this->open($this->filename, null);
             $this->stackSize = 0;
@@ -264,8 +250,7 @@ class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
     {
         $file = $this->normalizePath($file);
 
-        if (strpos($file.'/', $this->basepath.'/') === 0)
-        {
+        if (strpos($file.'/', $this->basepath.'/') === 0) {
             return substr($file, strlen($this->basepath) + 1);
         }
 

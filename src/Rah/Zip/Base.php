@@ -52,12 +52,9 @@ abstract class Rah_Zip_Base implements Rah_Zip_Template
 
     public function __construct(Rah_Zip_Config $config, Rah_Zip_Archive_Template $zip = null)
     {
-        if ($zip === null)
-        {
+        if ($zip === null) {
             $this->zip = new Rah_Zip_Archive_ZipArchive();
-        }
-        else
-        {
+        } else {
             $this->zip = $zip;
         }
 

@@ -45,8 +45,7 @@ class Rah_Zip_Archive extends Rah_Zip_Config
 
     public function __call($name, $args)
     {
-        if (property_exists($this, $name) === false)
-        {
+        if (property_exists($this, $name) === false) {
             throw new Exception('Unknown config option given: '.$name);
         }
 

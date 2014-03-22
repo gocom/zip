@@ -68,48 +68,37 @@ class Rah_Zip_Create extends Rah_Zip_Base
     {
         $count = 0;
 
-        foreach ((array) $this->config->source as $source)
-        {
-            if (($source = realpath($source)) === false || !file_exists($source) || !is_readable($source) || (!is_file($source) && !is_dir($source)))
-            {
+        foreach ((array) $this->config->source as $source) {
+            if (($source = realpath($source)) === false || !file_exists($source) || !is_readable($source) || (!is_file($source) && !is_dir($source))) {
                 throw new Exception('Unable add source to the archive: ' . $source);
             }
 
             $this->zip->baseDirectory($source);
 
-            if (is_dir($source))
-            {
+            if (is_dir($source)) {
                 $files = new RecursiveDirectoryIterator($source);
                 $file = new RecursiveIteratorIterator($files, RecursiveIteratorIterator::SELF_FIRST);
-            }
-            else
-            {
+            } else {
                 $this->zip->addFile($source, basename($source));
                 continue;
             }
 
-            while ($file->valid())
-            {
-                if ($file->isDot() || ($this->config->symlink === false && $file->isLink()) || $file->isReadable() === false)
-                {
+            while ($file->valid()) {
+                if ($file->isDot() || ($this->config->symlink === false && $file->isLink()) || $file->isReadable() === false) {
                     $file->next();
                     continue;
                 }
 
                 $name = $file->getPathname();
 
-                if (in_array($name, (array) $this->config->ignore, true))
-                {
+                if (in_array($name, (array) $this->config->ignore, true)) {
                     $file->next();
                     continue;
                 }
 
-                if ($file->isDir())
-                {
+                if ($file->isDir()) {
                     $this->zip->addEmptyDir($name);
-                }
-                else
-                {
+                } else {
                     $this->zip->addFile($name);
                 }
 
