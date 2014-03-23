@@ -24,16 +24,18 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+namespace Rah\Zip\Archive;
+
 /**
- * Template for ZipArchive implementation.
+ * Interface for ZipArchive implementation.
  */
 
-interface Rah_Zip_Archive_Template
+interface ArchiveInterface
 {
     /**
      * Constructor.
      *
-     * @throws Rah_Zip_Archive_Exception
+     * @throws Exception
      */
 
     public function __construct();
@@ -51,8 +53,8 @@ interface Rah_Zip_Archive_Template
      *
      * @param  string $filename The filename
      * @param  int    $flags    The flags
-     * @return Rah_Zip_Archive_Template
-     * @throws Rah_Zip_Archive_Exception
+     * @return ArchiveInterface
+     * @throws Exception
      */
 
     public function open($filename, $flags = ZIPARCHIVE::OVERWRITE);
@@ -60,8 +62,8 @@ interface Rah_Zip_Archive_Template
     /**
      * Closes the file.
      *
-     * @return Rah_Zip_Archive_Template
-     * @throws Rah_Zip_Archive_Exception
+     * @return ArchiveInterface
+     * @throws Exception
      */
 
     public function close();
@@ -70,8 +72,8 @@ interface Rah_Zip_Archive_Template
      * Adds a file to the archive.
      *
      * @param  string $file The filename
-     * @return Rah_Zip_Archive_Template
-     * @throws Rah_Zip_Archive_Exception
+     * @return ArchiveInterface
+     * @throws Exception
      */
 
     public function addFile($filename);
@@ -80,8 +82,8 @@ interface Rah_Zip_Archive_Template
      * Adds an empty directory to the archive.
      *
      * @param  string $localname The filename inside the archive
-     * @return Rah_Zip_Archive_Template
-     * @throws Rah_Zip_Archive_Exception
+     * @return ArchiveInterface
+     * @throws Exception
      */
 
     public function addEmptyDir($localname);
@@ -91,8 +93,8 @@ interface Rah_Zip_Archive_Template
      *
      * @param  string $localname  The filename
      * @param  string $contents   The file contents
-     * @return Rah_Zip_Archive_Template
-     * @throws Rah_Zip_Archive_Exception
+     * @return ArchiveInterface
+     * @throws Exception
      */
 
     public function addFromString($localname, $contents);
@@ -112,7 +114,7 @@ interface Rah_Zip_Archive_Template
      * and merely compared to the given file paths.
      *
      * @param  string $directory Path to the directory
-     * @return Rah_Zip_Archive_Template
+     * @return ArchiveInterface
      */
 
     public function baseDirectory($directory);
@@ -122,8 +124,8 @@ interface Rah_Zip_Archive_Template
      *
      * @param  string       $destination   The location the archive is extracted to
      * @param  string|array $entries       The entries to extract by name
-     * @return Rah_Zip_Archive_Template
-     * @throws Rah_Zip_Archive_Exception
+     * @return ArchiveInterface
+     * @throws Exception
      */
 
     public function extractTo($destination, $entries = null);

@@ -24,23 +24,28 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+namespace Rah\Zip;
+
 /**
  * Creates an archive from the given file or directory.
  *
  * If the specified file is a directory, all of its files
  * are added recursively to the archive.
  *
- * @example
- * $zip = new Rah_Zip_Archive();
- * $zip
+ * <code>
+ * use Rah\Zip\Archive;
+ * use Rah\Zip\Create;
+ * $archive = new Archive();
+ * $archive
  *    ->file('/path/to/archive.zip')
  *    ->source('/path/to/source/directory')
  *    ->tmp('/tmp');
  *
- * new Rah_Zip_Create($zip);
+ * new Create($archive);
+ * </code>
  */
 
-class Rah_Zip_Create extends Rah_Zip_Base
+class Create extends Base
 {
     /**
      * Initializes.
@@ -48,13 +53,13 @@ class Rah_Zip_Create extends Rah_Zip_Base
 
     protected function init()
     {
-        $tmp = new Rah_Eien_File();
+        $tmp = new \Rah_Eien_File();
         $tmp
             ->tmp($this->config->tmp)
             ->final($this->config->file);
 
-        $file = new Rah_Eien_Temporary_File($tmp);
-        $this->zip->open($file->getFilename(), ZIPARCHIVE::OVERWRITE);
+        $file = new \Rah_Eien_Temporary_File($tmp);
+        $this->zip->open($file->getFilename(), \ZIPARCHIVE::OVERWRITE);
         $this->pack();
         $this->zip->close();
         $file->move();
@@ -70,14 +75,14 @@ class Rah_Zip_Create extends Rah_Zip_Base
 
         foreach ((array) $this->config->source as $source) {
             if (($source = realpath($source)) === false || !file_exists($source) || !is_readable($source) || (!is_file($source) && !is_dir($source))) {
-                throw new Exception('Unable add source to the archive: ' . $source);
+                throw new \Exception('Unable add source to the archive: ' . $source);
             }
 
             $this->zip->baseDirectory($source);
 
             if (is_dir($source)) {
-                $files = new RecursiveDirectoryIterator($source);
-                $file = new RecursiveIteratorIterator($files, RecursiveIteratorIterator::SELF_FIRST);
+                $files = new \RecursiveDirectoryIterator($source);
+                $file = new \RecursiveIteratorIterator($files, \RecursiveIteratorIterator::SELF_FIRST);
             } else {
                 $this->zip->addFile($source, basename($source));
                 continue;

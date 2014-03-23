@@ -24,16 +24,18 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+namespace Rah\Zip;
+
 /**
  * Base class.
  */
 
-abstract class Rah_Zip_Base implements Rah_Zip_Template
+abstract class Base implements BaseInterface
 {
     /**
      * The config.
      *
-     * @var Rah_Zip_Config
+     * @var Config
      */
 
     protected $config;
@@ -41,7 +43,7 @@ abstract class Rah_Zip_Base implements Rah_Zip_Template
     /**
      * An instance of ZipArchive.
      *
-     * @var Rah_Zip_Archive_Template
+     * @var Archive\ArchiveInterface
      */
 
     protected $zip;
@@ -50,10 +52,10 @@ abstract class Rah_Zip_Base implements Rah_Zip_Template
      * {@inheritdoc}
      */
 
-    public function __construct(Rah_Zip_Config $config, Rah_Zip_Archive_Template $zip = null)
+    public function __construct(Config $config, Archive\ArchiveInterface $zip = null)
     {
         if ($zip === null) {
-            $this->zip = new Rah_Zip_Archive_ZipArchive();
+            $this->zip = new Archive\ZipArchive();
         } else {
             $this->zip = $zip;
         }
@@ -63,22 +65,10 @@ abstract class Rah_Zip_Base implements Rah_Zip_Template
     }
 
     /**
-     * {@inheritdoc}
+     * Initializes.
      */
 
-    public function __destruct()
-    {
-        $this->close();
-    }
-
-    /**
-     * Initialize.
-     */
-
-    protected function init()
-    {
-        throw new Exception(__CLASS__.'::init() method is unimplemented.');
-    }
+    abstract protected function init();
 
     /**
      * {@inheritdoc}

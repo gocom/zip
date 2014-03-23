@@ -24,16 +24,18 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+namespace Rah\Zip\Archive;
+
 /**
  * ZipArchive implementation.
  */
 
-class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
+class ZipArchive implements ArchiveInterface
 {
     /**
      * The instance.
      *
-     * @var ZipArchive
+     * @var \ZipArchive
      */
 
     protected $zip;
@@ -84,10 +86,10 @@ class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
 
     public function __construct()
     {
-        if (class_exists('ZipArchive')) {
-            $this->zip = new ZipArchive();
+        if (class_exists('\ZipArchive')) {
+            $this->zip = new \ZipArchive();
         } else {
-            throw new Rah_Zip_Archive_Exception('ZipArchive is not installed.');
+            throw new Exception('ZipArchive is not installed.');
         }
     }
 
@@ -107,7 +109,7 @@ class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
     public function open($filename, $flags = ZIPARCHIVE::OVERWRITE)
     {
         if ($this->zip->open($filename, $flags) !== true) {
-            throw new Rah_Zip_Archive_Exception('Unable to open: '.$filename);
+            throw new Exception('Unable to open: '.$filename);
         } else {
             $this->filename = $filename;
             $this->isOpen = true;
@@ -124,7 +126,7 @@ class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
     {
         if ($this->isOpen === true) {
             if ($this->zip->close() !== true) {
-                throw new Rah_Zip_Archive_Exception('Unable to close: '.$this->filename);
+                throw new Exception('Unable to close: '.$this->filename);
             }
 
             $this->isOpen = false;
@@ -143,7 +145,7 @@ class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
         $localname = $this->relativePath($filename);
 
         if ($this->zip->addFile($filename, $localname) !== true) {
-            throw new Rah_Zip_Archive_Exception('Unable to add a file to the archive: '.$localname);
+            throw new Exception('Unable to add a file to the archive: '.$localname);
         }
 
         return $this;
@@ -159,7 +161,7 @@ class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
         $localname = $this->relativePath($localname);
 
         if ($this->zip->addEmptyDir($localname) !== true) {
-            throw new Rah_Zip_Archive_Exception('Unable to add a directory to the archive: '.$localname);
+            throw new Exception('Unable to add a directory to the archive: '.$localname);
         }
 
         return $this;
@@ -175,7 +177,7 @@ class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
         $localname = $this->normalizePath($localname);
 
         if ($this->zip->addFromString($localname, $contents) !== true) {
-            throw new Rah_Zip_Archive_Exception('Unable to add a file from a string to the archive: '.$localname);
+            throw new Exception('Unable to add a file from a string to the archive: '.$localname);
         }
 
         return $this;
@@ -201,8 +203,8 @@ class Rah_Zip_Archive_ZipArchive implements Rah_Zip_Archive_Template
 
     public function extractTo($destination, $entries = null)
     {
-        if ($this->zip->extractTo($filename) !== true) {
-            throw new Rah_Zip_Archive_Exception('Unable to extract to: '.$filename);
+        if ($this->zip->extractTo($destination, $entries) === false) {
+            throw new Exception('Unable to extract to: '.$destination);
         }
 
         return $this;

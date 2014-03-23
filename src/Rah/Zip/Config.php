@@ -24,19 +24,23 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+namespace Rah\Zip;
+
 /**
  * The configuration options.
  *
- * @example
- * class MyAppConfig extends Rah_Zip_Config
+ * <code>
+ * use Rah\Zip\Config;
+ * class MyAppConfig extends Config
  * {
  *     public $file = '/path/to/archive.zip';
  *     public $source = '/path/to/source';
  *     public $tmp = '/tmp';
  * }
+ * </code>
  */
 
-abstract class Rah_Zip_Config
+abstract class Config
 {
     /**
      * The ZIP archive filename.

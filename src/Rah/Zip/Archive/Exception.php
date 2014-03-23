@@ -24,10 +24,12 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+namespace Rah\Zip\Archive;
+
 /**
  * Exceptions for ZipArchive implementation.
  */
 
-class Rah_Zip_Archive_Exception extends Exception
+class Exception extends \Exception
 {
 }

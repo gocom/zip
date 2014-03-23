@@ -24,29 +24,33 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+namespace Rah\Zip;
+
 /**
  * Configures an archive instance.
  *
- * @example
- * $zip = new Rah_Zip_Archive();
- * $zip
+ * <code>
+ * use Rah\Zip\Archive;
+ * $archive = new Archive();
+ * $archive
  *     ->file('/path/to/archive.zip')
  *     ->source('/path/to/source')
  *     ->tmp('/tmp');
+ * </code>
  */
 
-class Rah_Zip_Archive extends Rah_Zip_Config
+class Archive extends Config
 {
     /**
      * Sets configuration options.
      *
-     * @return Rah_Backup_Archive_Archive
+     * @return Archive
      */
 
     public function __call($name, $args)
     {
         if (property_exists($this, $name) === false) {
-            throw new Exception('Unknown config option given: '.$name);
+            throw new \Exception('Unknown config option given: '.$name);
         }
 
         $this->$name = $args[0];

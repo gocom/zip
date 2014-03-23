@@ -24,28 +24,22 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+namespace Rah\Zip;
+
 /**
  * The base interface.
  */
 
-interface Rah_Zip_Template
+interface BaseInterface
 {
     /**
      * Constructor.
      *
-     * @param Rah_Zip_Config           $config
-     * @param Rah_Zip_Archive_Template $zip
+     * @param Config                   $config
+     * @param Archive\ArchiveInterface $zip
      */
 
-    public function __construct(Rah_Zip_Config $config, Rah_Zip_Archive_Template $zip = null);
-
-    /**
-     * Destructor.
-     *
-     * Closes open files and cleans trash.
-     */
-
-    public function __destruct();
+    public function __construct(Config $config, Archive\ArchiveInterface $zip = null);
 
     /**
      * Returns a path to the archive.

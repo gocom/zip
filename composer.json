@@ -17,11 +17,11 @@
     },
     "autoload": {
         "psr-0": {
-            "Rah_Zip_": "src/"
+            "Rah\\Zip\\": "src/"
         }
     },
     "require": {
-        "php": ">=5.2.0",
+        "php": ">=5.3.0",
         "rah/eien": "*@dev"
     },
     "require-dev": {

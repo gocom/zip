@@ -24,20 +24,25 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+namespace Rah\Zip;
+
 /**
  * Extracts an archive.
  *
- * @example
- * $zip = new Rah_Zip_Archive();
- * $zip
+ * <code>
+ * use Rah\Zip\Archive;
+ * use Rah\Zip\Extract;
+ * $archive = new Archive();
+ * $archive
  *    ->file('/path/to/archive.zip')
  *    ->target('/path/to/target/directory')
  *    ->tmp('/tmp');
  *
- * new Rah_Zip_Extract($zip);
+ * new Extract($archive);
+ * </code>
  */
 
-class Rah_Zip_Extract extends Rah_Zip_Base
+class Extract extends Base
 {
     /**
      * Initializes.
@@ -45,12 +50,12 @@ class Rah_Zip_Extract extends Rah_Zip_Base
 
     protected function init()
     {
-        $tmp = new Rah_Eien_File();
+        $tmp = new \Rah_Eien_File();
         $tmp
             ->tmp($this->config->tmp)
             ->file($this->config->file);
 
-        $file = new Rah_Eien_Temporary_Make($tmp);
+        $file = new \Rah_Eien_Temporary_Make($tmp);
         $this->zip->open($file->getFilename(), null);
         $this->zip->extractTo($this->config->target);
         $this->zip->close();
